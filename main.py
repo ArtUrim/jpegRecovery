@@ -38,11 +38,22 @@ def isJpegType(fd,tags : dict):
 
     for tt in tags:
         if tt in fd.list_all():
-            if not fd[tt].startswith(tags[tt]):
+            if tags[tt] is None:
+                continue
+            elif isinstance(fd[tt],str):
+               if not fd[tt].startswith(tags[tt]):
+                   return False
+            elif isinstance(fd[tt],int):
+               if fd[tt] != tags[tt]:
+                   return False
+            else:
                return False
         else:
             return False
     return True
+
+def onlyAdapted( jfiles: list, tags: dict ):
+    pass
             
 def getTimes(fd):
     fd = prepFile(fd)
@@ -102,7 +113,7 @@ def convertTime(orgVal:str):
             'midnight': midnight
             }
 
-if __name__ == "__main__":
+def testSamopt():
     fg = convertTime('2015:07:19 12:08:40')
     dd = traverse_recov("jpg")
     addDir( 'result', '0312' )
@@ -117,3 +128,6 @@ if __name__ == "__main__":
     rr = getTimes('jpg/43745280.jpg')
     print( "{}".format(rr['datetime']) )
     print( "{}".format(len(rr)) )
+
+if __name__ == "__main__":
+    images = traverse_recov( "images" )
