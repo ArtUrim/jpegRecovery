@@ -3,5 +3,6 @@ include/
 lib/
 __pycache__
 *~
+.*.swp
 share/
 lib64
