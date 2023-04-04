@@ -1,4 +1,4 @@
-from test import traverse_recov
+from main import traverse_recov
 
 def test_trav():
     dd = traverse_recov("jpg")

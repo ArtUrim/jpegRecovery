@@ -1,4 +1,4 @@
-from test import isJpegType
+from main import isJpegType
 
 
 def test_pentax_ok():

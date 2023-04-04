@@ -1,4 +1,4 @@
-from test import getTimes
+from main import getTimes
 
 def test_gettime_ok():
     assert( 3 == len(getTimes('jpg/43745280.jpg') ) )
