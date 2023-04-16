@@ -27,8 +27,8 @@ class JpegDesc:
         else:
             warnings.warn( "Wrong date: {}".format( self.date ) )
 
-    def __mkNewFileName(self):
-        self.newfilename = 'KIA_' + self.shutter + '.jpg'
+    def __mkNewFileName(self,suf=''):
+        return 'KIA_' + self.shutter + suf +'.jpg'
 
     def mkDir(self):
         if hasattr( self, "dir" ):
@@ -41,14 +41,22 @@ class JpegDesc:
     def cpyFile(self):
         if not self.mkDir():
             warnings.warn( "No dir" )
+            pathlib.Path("Unknown").mkdir(parents=True,exist_ok=True)
+            shutil.copy(self.name,"Unknown")
             return False
         else:
-            self.__mkNewFileName()
-            fullFileName = '/'.join([self.dir,self.newfilename])
-            if not os.path.isfile(fullFileName):
-                shutil.copy(self.name,fullFileName)
-            else:
-                warnings.warn( "File {} exists".format(fullFileName) )
+            count = 1
+            self.newfilename = self.__mkNewFileName()
+            while True:
+                fullFileName = '/'.join([self.dir,self.newfilename])
+                if not os.path.isfile(fullFileName):
+                    shutil.copy(self.name,fullFileName)
+                    break
+                else:
+                    warnings.warn( "File {} exists".format(fullFileName) )
+                    self.newfilename = self.__mkNewFileName('_' + str(ount))
+                    count += 1
+
             return True
 
 
